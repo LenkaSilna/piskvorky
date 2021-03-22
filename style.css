@@ -60,7 +60,7 @@ p {
 
 .pravidla {
   background-color: #1fcca4;
-  border-bottom: #283e50 solid 2px;
+  border-bottom: #283e50 solid 1px;
 }
 
 .pravidla:hover {
