@@ -121,9 +121,6 @@ figure {
   margin-inline-end: 0;
 }
 
-li::marker {
-}
-
 @media (min-width: 750px) {
   .piskvorky {
     max-width: 740px;
