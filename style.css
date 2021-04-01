@@ -24,7 +24,8 @@ h1 {
   font-size: 50px;
   margin: 0;
   padding-bottom: 16px;
-  letter-spacing: 1px;
+  text-align: center;
+  font-weight: 500;
 }
 
 p {
@@ -37,6 +38,8 @@ p {
 .piskvorky {
   max-width: 370px;
   box-shadow: 0px 0px 20px 0px rgba(154, 130, 184, 0.44);
+  margin-top: 80px;
+  margin-bottom: 50px;
 }
 
 .uvodni img {
@@ -74,4 +77,72 @@ p {
 
 .zacitHrat:hover {
   background-color: #0090e9;
+}
+
+.pravidlatxt {
+  background-color: #283e50;
+  text-align: left;
+  padding: 13px;
+  line-height: 1.5;
+}
+
+ol {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  padding-right: 20px;
+}
+
+ol > li {
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
+
+.describe {
+  font-style: italic;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.describe-img {
+  max-width: 100%;
+}
+
+.symbol {
+  filter: invert(100%);
+  width: 1em;
+  height: 1em;
+}
+
+figure {
+  display: block;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+li::marker {
+}
+
+@media (min-width: 750px) {
+  .piskvorky {
+    max-width: 740px;
+    font-size: 1.2em;
+  }
+
+  .instruction {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-around;
+  }
+
+  .describe,
+  .foto {
+    width: 340px;
+  }
+
+  .describe-img {
+    width: 340px;
+  }
 }
