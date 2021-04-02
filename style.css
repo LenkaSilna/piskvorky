@@ -91,6 +91,7 @@ p {
   text-align: left;
   padding: 13px;
   line-height: 1.5;
+  border-radius: 4px 4px 0 0;
 }
 
 ol {
@@ -137,16 +138,12 @@ figure {
   .instruction {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    flex-basis: calc((100% - 20px) / 2);
     justify-content: space-around;
   }
 
   .describe,
   .foto {
-    width: 340px;
-  }
-
-  .describe-img {
     width: 340px;
   }
 }
