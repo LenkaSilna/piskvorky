@@ -146,4 +146,8 @@ figure {
   .foto {
     width: 340px;
   }
+
+  .describe {
+    font-size: 0.75em;
+  }
 }
