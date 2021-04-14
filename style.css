@@ -1,11 +1,7 @@
-/* Nadpis Piškvorky je fontem Lobster. Najdeš ho zdarma na Google Fonts.
-Různé vzdálenosti, velikosti textu odhadni od oka nebo přesně změř na obrázku výše.
-Gradient v pozadí jde z fialové  #615dad do růžové  #ffc8da.
-Další barvy, které se ti budou hodit:
-Barva textu  #ffffff.
-Podkladová tmavě modrá  #283e50.
-Tlačítko Pravidla  #1fcca4. A po najetí myši  #1cbb96.
-Tlačítko Začít hrát  #0197f6. Po najetí  #0090e9. */
+*:before,
+*:after {
+  box-sizing: border-box;
+}
 
 body {
   background-image: linear-gradient(#615dad, #ffc8da);
@@ -13,7 +9,6 @@ body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
   font-family: Arial, Helvetica, sans-serif;
   color: #ffffff;
   margin: 0;
@@ -127,6 +122,76 @@ figure {
   margin-block-end: 0em;
   margin-inline-start: 0;
   margin-inline-end: 0;
+}
+
+.play {
+  max-width: 80vmin;
+  margin-top: 60px;
+}
+
+.control {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 20px;
+}
+
+.player {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+}
+
+.text {
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-right: 0.5em;
+}
+
+.home,
+.restart {
+  display: inline-block;
+  padding: 10px 10px;
+  border-radius: 5px;
+}
+
+.home {
+  background-color: #1fcca4;
+}
+
+.home:hover,
+.home:focus {
+  background-color: #1cbb96;
+}
+
+.restart {
+  margin-left: 7px;
+  background-color: #0197f6;
+}
+
+.restart:hover,
+.restart:focus {
+  background-color: #0090e9;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid black;
+  box-shadow: 0px 0 10px rgb(0 0 0 / 30%);
+}
+
+.grid__pole {
+  flex: 1 1 10%;
+  height: calc(80vmin * 0.1);
+  background-color: #bcb0d6;
+  border: 1px solid black;
+}
+
+.grid__pole:hover,
+.grid__pole:focus {
+  background-color: #d6ccec;
 }
 
 @media (min-width: 750px) {
