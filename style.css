@@ -152,7 +152,7 @@ figure {
 .home,
 .restart {
   display: inline-block;
-  padding: 10px 10px;
+  padding: 7px 7px;
   border-radius: 5px;
 }
 
@@ -244,6 +244,6 @@ figure {
   }
 
   .text {
-    font-size: 2em;
+    font-size: 1.75em;
   }
 }
