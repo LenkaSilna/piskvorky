@@ -99,8 +99,8 @@ const isWinningMove = (field) => {
     i--;
   }
 
-  // Koukni dolu
-  i = origin.row;
+  // koukni dolu
+  i = origin.column;
   while (
     i < boardSize - 1 &&
     symbol === getSymbol(getField(i + 1, origin.column))
@@ -110,6 +110,79 @@ const isWinningMove = (field) => {
   }
 
   if (inColumn >= symbolsToWin) {
+    return true;
+  }
+
+  let diagonalRow;
+  let diagonalColumn;
+
+  // jednička pro právě vybrané políčko v diagonále vpravo
+  let diagonalRight = 1;
+
+  // diagonálně nahoru a vpravo
+  diagonalRow = origin.row;
+  diagonalColumn = origin.column;
+
+  while (
+    diagonalColumn < boardSize - 1 &&
+    diagonalRow > 0 &&
+    symbol === getSymbol(getField(diagonalRow - 1, diagonalColumn + 1))
+  ) {
+    diagonalRight += 1;
+    diagonalRow -= 1;
+    diagonalColumn += 1;
+  }
+
+  // diagonálně dolu a vlevo
+  diagonalRow = origin.row;
+  diagonalColumn = origin.column;
+
+  while (
+    diagonalRow < boardSize - 1 &&
+    diagonalColumn > 0 &&
+    symbol === getSymbol(getField(diagonalRow + 1, diagonalColumn - 1))
+  ) {
+    diagonalRight += 1;
+    diagonalRow += 1;
+    diagonalColumn -= 1;
+  }
+
+  if (diagonalRight >= symbolsToWin) {
+    return true;
+  }
+
+  // jednička pro právě vybrané políčko v diagonále vlevo
+  let diagonalLeft = 1;
+
+  // diagonálně nahoru a vlevo
+  diagonalRow = origin.row;
+  diagonalColumn = origin.column;
+
+  while (
+    diagonalColumn < boardSize - 1 &&
+    diagonalRow > 0 &&
+    symbol === getSymbol(getField(diagonalRow - 1, diagonalColumn - 1))
+  ) {
+    diagonalLeft += 1;
+    diagonalRow -= 1;
+    diagonalColumn -= 1;
+  }
+
+  // diagonálně dolu a vpravo
+  diagonalRow = origin.row;
+  diagonalColumn = origin.column;
+
+  while (
+    diagonalRow < boardSize - 1 &&
+    diagonalColumn > 0 &&
+    symbol === getSymbol(getField(diagonalRow + 1, diagonalColumn + 1))
+  ) {
+    diagonalLeft += 1;
+    diagonalRow += 1;
+    diagonalColumn += 1;
+  }
+
+  if (diagonalLeft >= symbolsToWin) {
     return true;
   }
 
