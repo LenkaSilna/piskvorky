@@ -1,43 +1,40 @@
 'use strict';
-let whoPlay = 'circle';
 
-const playElm = document.querySelector('#play');
+let player = 'circle';
+const gridSquare = document.querySelectorAll('.grid__pole');
+const boardSize = 10;
+const symbolsToWin = 5;
 
-const nowPlays = (event) => {
-  if (whoPlay === 'circle') {
-    event.target.classList.add('grid__pole-circle');
-    event.target.disabled = true;
-    playElm.src = 'img/cross.svg';
-    playElm.alt = 'křížek';
-    whoPlay = 'cross';
-    if (isWinningMove(event.target)) {
-      const confirmation = confirm('Výhrává kolečko. Spustit novou hru.');
-      if (confirmation === true) {
+const NowPlay = ({ target }) => {
+  if (
+    !target.classList.contains('grid__pole-circle') &&
+    !target.classList.contains('grid__pole-cross')
+  ) {
+    target.classList.add(`grid__pole-${player}`);
+    target.disabled = true;
+    const SymbolElm = document.querySelector('.symbol');
+    if (player === 'circle') {
+      player = 'cross';
+      SymbolElm.src = 'img/cross.svg';
+      SymbolElm.alt = 'křížek';
+    } else {
+      player = 'circle';
+      SymbolElm.src = 'img/circle.svg';
+      SymbolElm.alt = 'kolečko';
+    }
+    if (isWinningMove(target) && player === 'cross') {
+      if (confirm(`Vyhrálo kolečko. Spustit další hru?`)) {
         location.reload();
       }
-    }
-  } else {
-    event.target.classList.add('grid__pole-cross');
-    event.target.disabled = true;
-    playElm.src = 'img/circle.svg';
-    playElm.alt = 'kolečko';
-    whoPlay = 'circle';
-    if (isWinningMove(event.target)) {
-      const confirmation = confirm('Výhrává křížek. Spustit novou hru.');
-      if (confirmation === true) {
+    } else if (isWinningMove(target) && player === 'circle') {
+      if (confirm(`Vyhrál křížek. Spustit další hru?`)) {
         location.reload();
       }
     }
   }
 };
 
-const btnElm = document.querySelectorAll('.grid__pole');
-for (let i = 0; i < btnElm.length; i += 1) {
-  btnElm[i].addEventListener('click', nowPlays);
-}
-
 const getSymbol = (field) => {
-  // Název třídy přizpůsob tvému kódu.
   if (field.classList.contains('grid__pole-cross')) {
     return 'cross';
   } else if (field.classList.contains('grid__pole-circle')) {
@@ -45,14 +42,13 @@ const getSymbol = (field) => {
   }
 };
 
-const boardSize = 10; // 10x10
-const fields = document.querySelectorAll('.grid__pole'); // Selektor pozměň tak, aby odpovídal tvému kódu.
-
-const getField = (row, column) => fields[row * boardSize + column];
+const getField = (row, column) => {
+  return gridSquare[row * boardSize + column];
+};
 
 const getPosition = (field) => {
   let fieldIndex = 0;
-  while (fieldIndex < fields.length && field !== fields[fieldIndex]) {
+  while (fieldIndex < gridSquare.length && field !== gridSquare[fieldIndex]) {
     fieldIndex++;
   }
 
@@ -62,14 +58,13 @@ const getPosition = (field) => {
   };
 };
 
-const symbolsToWin = 5;
 const isWinningMove = (field) => {
   const origin = getPosition(field);
   const symbol = getSymbol(field);
 
   let i;
 
-  let inRow = 1; // Jednička pro právě vybrané políčko
+  let inRow = 1;
   // Koukni doleva
   i = origin.column;
   while (i > 0 && symbol === getSymbol(getField(origin.row, i - 1))) {
@@ -99,8 +94,8 @@ const isWinningMove = (field) => {
     i--;
   }
 
-  // koukni dolu
-  i = origin.column;
+  // Koukni dolu
+  i = origin.row;
   while (
     i < boardSize - 1 &&
     symbol === getSymbol(getField(i + 1, origin.column))
@@ -113,78 +108,71 @@ const isWinningMove = (field) => {
     return true;
   }
 
-  let diagonalRow;
-  let diagonalColumn;
+  // Diagonály
 
-  // jednička pro právě vybrané políčko v diagonále vpravo
-  let diagonalRight = 1;
+  let y;
 
-  // diagonálně nahoru a vpravo
-  diagonalRow = origin.row;
-  diagonalColumn = origin.column;
-
+  let inDiagonalA = 1;
+  // Koukni nahoru vpravo
+  i = origin.row;
+  y = origin.column;
   while (
-    diagonalColumn < boardSize - 1 &&
-    diagonalRow > 0 &&
-    symbol === getSymbol(getField(diagonalRow - 1, diagonalColumn + 1))
+    i > 0 &&
+    y < boardSize - 1 &&
+    symbol === getSymbol(getField(i - 1, y + 1))
   ) {
-    diagonalRight += 1;
-    diagonalRow -= 1;
-    diagonalColumn += 1;
+    inDiagonalA++;
+    i--;
+    y++;
   }
 
-  // diagonálně dolu a vlevo
-  diagonalRow = origin.row;
-  diagonalColumn = origin.column;
-
+  // Koukni dolu vlevo
+  i = origin.row;
+  y = origin.column;
   while (
-    diagonalRow < boardSize - 1 &&
-    diagonalColumn > 0 &&
-    symbol === getSymbol(getField(diagonalRow + 1, diagonalColumn - 1))
+    i < boardSize - 1 &&
+    y > 0 &&
+    symbol === getSymbol(getField(i + 1, y - 1))
   ) {
-    diagonalRight += 1;
-    diagonalRow += 1;
-    diagonalColumn -= 1;
+    inDiagonalA++;
+    i++;
+    y--;
   }
 
-  if (diagonalRight >= symbolsToWin) {
+  if (inDiagonalA >= symbolsToWin) {
     return true;
   }
 
-  // jednička pro právě vybrané políčko v diagonále vlevo
-  let diagonalLeft = 1;
-
-  // diagonálně nahoru a vlevo
-  diagonalRow = origin.row;
-  diagonalColumn = origin.column;
-
-  while (
-    diagonalColumn < boardSize - 1 &&
-    diagonalRow > 0 &&
-    symbol === getSymbol(getField(diagonalRow - 1, diagonalColumn - 1))
-  ) {
-    diagonalLeft += 1;
-    diagonalRow -= 1;
-    diagonalColumn -= 1;
+  let inDiagonalB = 1;
+  // Koukni nahoru vlevo
+  i = origin.row;
+  y = origin.column;
+  while (i > 0 && y > 0 && symbol === getSymbol(getField(i - 1, y - 1))) {
+    inDiagonalB++;
+    i--;
+    y--;
   }
 
-  // diagonálně dolu a vpravo
-  diagonalRow = origin.row;
-  diagonalColumn = origin.column;
-
+  // Koukni dolu vpravo
+  i = origin.row;
+  y = origin.column;
   while (
-    diagonalRow < boardSize - 1 &&
-    diagonalColumn > 0 &&
-    symbol === getSymbol(getField(diagonalRow + 1, diagonalColumn + 1))
+    i < boardSize - 1 &&
+    y < boardSize - 1 &&
+    symbol === getSymbol(getField(i + 1, y + 1))
   ) {
-    diagonalLeft += 1;
-    diagonalRow += 1;
-    diagonalColumn += 1;
+    inDiagonalB++;
+    i++;
+    y++;
   }
 
-  if (diagonalLeft >= symbolsToWin) {
+  if (inDiagonalB >= symbolsToWin) {
     return true;
   }
 
   return false;
 };
+
+for (let i = 0; i < gridSquare.length; i++) {
+  gridSquare[i].addEventListener('click', NowPlay);
+}
